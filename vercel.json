@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "path/to/your/wsgi.py": {
+      "maxDuration": 60
+    }
+  }
+}
