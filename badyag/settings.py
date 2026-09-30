@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'badyag.wsgi.application'
 db_url = os.environ.get("POSTGRES_URL") or os.environ.get("DATABASE_URL")
 
 if not db_url:
+    # Если её нет, явно выбрасываем исключение, чтобы избежать отката к SQLite
     raise Exception("POSTGRES_URL или DATABASE_URL не найдены! Проверьте Environment Variables в Vercel.")
 
 url = urllib.parse.urlparse(db_url)
