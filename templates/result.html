@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        img {
+            max-width: 500px;
+            max-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 10px 25px;
+            background: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .back-btn:hover {
+            background: #357ab8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Привет, {{ name }}!</h1>
+    {% if image %}
+        <img src="{% static image %}" alt="{{ name }}">
+    {% else %}
+        <p>Картинок пока нет — добавь их в static/images/{{ gender }}/</p>
+    {% endif %}
+    <a href="{% url 'reset' %}" class="back-btn">← Назад</a>
+</body>
+</html>

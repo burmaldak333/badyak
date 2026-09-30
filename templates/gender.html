@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор пола</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        h1 {
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+        .btn {
+            padding: 20px 50px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .btn-male {
+            background: #4a90e2;
+        }
+        .btn-female {
+            background: #e24a90;
+        }
+    </style>
+</head>
+<body>
+    <h1>Какого ты пола?</h1>
+    <div class="buttons">
+        <form method="post" action="">
+            {% csrf_token %}
+            <button type="submit" name="gender" value="male" class="btn btn-male">
+                Мужской
+            </button>
+            <button type="submit" name="gender" value="female" class="btn btn-female">
+                Женский
+            </button>
+        </form>
+    </div>
+</body>
+</html>
