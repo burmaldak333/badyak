@@ -80,13 +80,25 @@ WSGI_APPLICATION = 'badyag.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True # Vercel обычно требует SSL-подключение к облачным базам данных
-    )
-}
+db_url = os.environ.get("POSTGRES_URL") or os.environ.get("DATABASE_URL")
+
+if db_url:
+    url = urllib.parse.urlparse(db_url)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': url.path.lstrip("/"),
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port or 5432,
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
+        }
+    }
+else:
+    raise Exception("DATABASE_URL или POSTGRES_URL не заданы! Проверьте Environment Variables в Vercel.")
 
 
 # Password validation
