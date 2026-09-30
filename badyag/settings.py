@@ -82,23 +82,24 @@ WSGI_APPLICATION = 'badyag.wsgi.application'
 
 db_url = os.environ.get("POSTGRES_URL") or os.environ.get("DATABASE_URL")
 
-if db_url:
-    url = urllib.parse.urlparse(db_url)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': url.path.lstrip("/"),
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port or 5432,
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
-        }
+if not db_url:
+    raise Exception("POSTGRES_URL или DATABASE_URL не найдены! Проверьте Environment Variables в Vercel.")
+
+url = urllib.parse.urlparse(db_url)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': url.path.lstrip("/"),
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port or 5432,
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
-else:
-    raise Exception("DATABASE_URL или POSTGRES_URL не заданы! Проверьте Environment Variables в Vercel.")
+}
 
 
 # Password validation
